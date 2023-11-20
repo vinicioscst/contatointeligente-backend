@@ -23,8 +23,8 @@ export class User {
   @Column({ unique: true, length: 45 })
   email: string;
 
-  @Column({ nullable: true })
-  avatar?: string;
+  @Column({ type:"varchar", nullable: true })
+  avatar?: string | undefined | null;
 
   @Column({ length: 120 })
   password: string;
