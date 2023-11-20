@@ -1,8 +1,8 @@
 import { userSchema } from "./user.schemas";
 
-const sessionsSchema = userSchema.pick({
+const sessionSchema = userSchema.pick({
   email: true,
   password: true,
 });
 
-export { sessionsSchema };
+export { sessionSchema };
