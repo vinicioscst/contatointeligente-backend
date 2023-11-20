@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -8,6 +10,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { Contact } from "./Contact.entity";
+import { getRounds, hashSync } from "bcryptjs";
 
 @Entity("users")
 export class User {
@@ -40,4 +43,14 @@ export class User {
 
   @OneToMany(() => Contact, (contact) => contact.user)
   contacts: Contact[]
+
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  hashSync() {
+    const roundsValue: number = getRounds(this.password)
+    if (!roundsValue) {
+      this.password = hashSync(this.password, 10)
+    }
+  }
 }
