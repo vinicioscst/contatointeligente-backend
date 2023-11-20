@@ -8,17 +8,23 @@ const userSchema = z.object({
   password: z.string().max(120),
   telephone: z.number(),
   createdAt: z.string(),
+  updatedAt: z.string(),
+  deletedAt: z.string().nullish().optional(),
 });
 
 const userRequestSchema = userSchema.omit({
   id: true,
   createdAt: true,
+  updatedAt: true,
+  deletedAt: true,
 });
 
 const userUpdateSchema = userSchema
   .omit({
     id: true,
     createdAt: true,
+    updatedAt: true,
+    deletedAt: true,
   })
   .partial();
 
