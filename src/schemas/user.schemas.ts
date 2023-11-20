@@ -10,7 +10,7 @@ const userSchema = z.object({
   createdAt: z.string(),
 });
 
-const userCreateSchema = userSchema.omit({
+const userRequestSchema = userSchema.omit({
   id: true,
   createdAt: true,
 });
@@ -29,4 +29,4 @@ const userResponseSchema = userSchema.omit({
 const usersResponseSchema = userResponseSchema.array();
 
 
-export {userSchema, userCreateSchema, userUpdateSchema, userResponseSchema, usersResponseSchema}
+export {userSchema, userRequestSchema, userUpdateSchema, userResponseSchema, usersResponseSchema}
