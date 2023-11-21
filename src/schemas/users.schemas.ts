@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { contactsResponseSchema } from "./contacts.schemas";
 
 const userSchema = z.object({
   id: z.string(),
@@ -32,9 +33,10 @@ const userUpdateSchema = userSchema
 
 const userResponseSchema = userSchema.omit({
   password: true,
+}).extend({
+  contacts: contactsResponseSchema.optional()
 });
 
 const usersResponseSchema = userResponseSchema.array();
-
 
 export {userSchema, userRequestSchema, userUpdateSchema, userResponseSchema, usersResponseSchema}

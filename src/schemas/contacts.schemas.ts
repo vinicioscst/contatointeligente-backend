@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { userSchema } from "./users.schemas";
 
 const contactSchema = z.object({
   id: z.string(),
@@ -8,8 +7,7 @@ const contactSchema = z.object({
   telephone: z.string().max(25),
   createdAt: z.string(),
   updatedAt: z.string(),
-  deletedAt: z.string().nullish().optional(),
-  user: userSchema,
+  deletedAt: z.string().nullish().optional()
 });
 
 const contactRequestSchema = contactSchema.omit({
