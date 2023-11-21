@@ -3,7 +3,7 @@ import {
   contactRequestSchema,
   contactSchema,
   contactsResponseSchema,
-} from "../schemas/contact.schemas";
+} from "../schemas/contacts.schemas";
 import { DeepPartial, Repository } from "typeorm";
 import { Contact } from "../entities/Contact.entity";
 

@@ -4,7 +4,7 @@ import {
   userResponseSchema,
   userSchema,
   usersResponseSchema,
-} from "../schemas/user.schemas";
+} from "../schemas/users.schemas";
 import { DeepPartial, Repository } from "typeorm";
 import { User } from "../entities/User.entity";
 
