@@ -23,14 +23,17 @@ export class User {
   @Column({ unique: true, length: 45 })
   email: string;
 
-  @Column({ type:"varchar", nullable: true })
-  avatar?: string | undefined | null;
-
   @Column({ length: 120 })
   password: string;
 
-  @Column()
-  telephone: number;
+  @Column({type: "boolean", default: false})
+  isAdmin: boolean;
+
+  @Column({ type:"varchar", nullable: true })
+  avatar?: string | undefined | null;
+
+  @Column({ length: 25 })
+  telephone: string;
 
   @CreateDateColumn({ type: "date" })
   createdAt: string;
