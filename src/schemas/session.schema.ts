@@ -1,4 +1,4 @@
-import { userSchema } from "./user.schemas";
+import { userSchema } from "./users.schemas";
 
 const sessionSchema = userSchema.pick({
   email: true,

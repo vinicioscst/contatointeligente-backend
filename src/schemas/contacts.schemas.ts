@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { userSchema } from "./user.schemas";
+import { userSchema } from "./users.schemas";
 
 const contactSchema = z.object({
   id: z.string(),
   fullName: z.string().max(255),
   email: z.string().email().max(45),
-  telephone: z.number(),
+  telephone: z.string().max(25),
   createdAt: z.string(),
   updatedAt: z.string(),
   deletedAt: z.string().nullish().optional(),
