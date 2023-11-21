@@ -7,13 +7,14 @@ import { validateUserId } from "../middlewares/validateUserId.middleware";
 import { validateToken } from "../middlewares/validateToken.middleware";
 import { validateUserPermission } from "../middlewares/validateUserPermission.middleware";
 import { verifyDeletedUser } from "../middlewares/verifyDeletedUser.middleware";
+import { isAdmin } from "../middlewares/isAdmin.middleware";
 
 const usersRouter: Router = Router()
 
 
 usersRouter.post("", validateBody(userRequestSchema), validateEmail, (req, res) => usersController.create(req, res))
-usersRouter.get("", (req, res) => usersController.listAll(req, res))
-usersRouter.patch("/:userId/restore", validateToken, validateUserPermission, verifyDeletedUser, (req, res) => usersController.restore(req, res))
+usersRouter.get("", validateToken, isAdmin, (req, res) => usersController.listAll(req, res))
+usersRouter.patch("/:userId/restore", validateToken, isAdmin, verifyDeletedUser, (req, res) => usersController.restore(req, res))
 
 usersRouter.use("/:userId", validateToken, validateUserPermission, validateUserId)
 
