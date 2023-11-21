@@ -16,10 +16,10 @@ export class UsersService {
     return userResponseSchema.parse(user);
   }
 
-  async list(id: string): Promise<TUserResponse> {
+  async list(userId: string): Promise<TUserResponse> {
     const user = await userRepository.findOne({
       where: {
-        id: id,
+        id: userId,
       },
       relations: {
         contacts: true,

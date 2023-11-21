@@ -8,9 +8,9 @@ export const validateUserId = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const { id } = req.params;
+  const { userId } = req.params;
 
-  const foundUser: User | null = await userRepository.findOneBy({ id });
+  const foundUser: User | null = await userRepository.findOneBy({ id: userId });
 
   if (!foundUser) {
     throw new AppError("User not found", 404);

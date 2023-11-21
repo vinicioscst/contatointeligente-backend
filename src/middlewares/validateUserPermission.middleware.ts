@@ -6,8 +6,8 @@ export const validateUserPermission = (
   res: Response,
   next: NextFunction
 ): void => {
-  const { id } = req.params;
-  const { userId, isAdmin } = res.locals;
+  const { userId } = req.params;
+  const { id, isAdmin } = res.locals;
 
   if (isAdmin) {
     return next();

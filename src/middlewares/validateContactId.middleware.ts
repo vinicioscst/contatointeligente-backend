@@ -3,15 +3,15 @@ import { contactRepository } from "../repositories";
 import { AppError } from "../errors/App.error";
 import { Contact } from "../entities/Contact.entity";
 
-export const validateUserId = async (
+export const validateContactId = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const { id } = req.params;
+  const { contactId } = req.params;
 
   const foundContact: Contact | null = await contactRepository.findOneBy({
-    id,
+    id: contactId,
   });
 
   if (!foundContact) {

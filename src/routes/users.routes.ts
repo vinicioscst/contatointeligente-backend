@@ -9,12 +9,12 @@ import { validateUserPermission } from "../middlewares/validateUserPermission.mi
 
 const usersRouter: Router = Router()
 
-usersRouter.use("/:id", validateToken, validateUserPermission, validateUserId)
+usersRouter.use("/:userId", validateToken, validateUserPermission, validateUserId)
 
 usersRouter.post("", validateBody(userRequestSchema), validateEmail, (req, res) => usersController.create(req, res))
 usersRouter.get("", (req, res) => usersController.listAll(req, res))
-usersRouter.get("/:id", (req, res) => usersController.list(req, res))
-usersRouter.patch("/:id", (req, res) => usersController.update(req, res))
-usersRouter.delete("/:id", (req, res) => usersController.delete(req, res))
+usersRouter.get("/:userId", (req, res) => usersController.list(req, res))
+usersRouter.patch("/:userId", (req, res) => usersController.update(req, res))
+usersRouter.delete("/:userId", (req, res) => usersController.delete(req, res))
 
 export { usersRouter }

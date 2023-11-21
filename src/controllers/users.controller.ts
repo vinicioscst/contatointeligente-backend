@@ -11,8 +11,8 @@ class UsersController {
     }
 
     async list(req: Request, res: Response) {
-        const { id } = req.params
-        const user = await this.usersService.list(id)
+        const { userId } = req.params
+        const user = await this.usersService.list(userId)
 
         return res.status(200).json(user)
     }

@@ -20,7 +20,7 @@ export const validateToken = (
       throw new AppError("Invalid token", 401);
     }
 
-    res.locals.userId = decoded.sub
+    res.locals.id = decoded.sub
     res.locals.isAdmin = decoded.isAdmin
 
     return next();
