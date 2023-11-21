@@ -8,10 +8,18 @@ export const validateContactId = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const { contactId } = req.params;
+  const { contactId, userId } = req.params;
 
-  const foundContact: Contact | null = await contactRepository.findOneBy({
-    id: contactId,
+  const foundContact: Contact | null = await contactRepository.findOne({
+    relations: {
+      user: true
+    },
+    where: {
+      id: contactId,
+      user: {
+        id: userId
+      }
+    }
   });
 
   if (!foundContact) {
