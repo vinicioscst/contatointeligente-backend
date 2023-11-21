@@ -36,6 +36,13 @@ class UsersController {
 
         return res.status(204).json()
     }
+    
+    async restore(req: Request, res: Response) {
+        const { foundUser } = res.locals
+        const restoredUser = await this.usersService.restore(foundUser)
+
+        return res.status(200).json(restoredUser)
+    }
 }
 
 export { UsersController }

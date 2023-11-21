@@ -44,4 +44,19 @@ export class UsersService {
   async delete(user: TUser): Promise<void> {
     await userRepository.softRemove(user);
   }
+
+  async restore(user: TUser): Promise<TUserResponse> {
+    await userRepository.restore(user.id);
+    
+    const restoredUser = await userRepository.findOne({
+      where: {
+        id: user.id,
+      },
+      relations: {
+        contacts: true,
+      },
+    });
+
+    return userResponseSchema.parse(restoredUser);
+  }
 }
