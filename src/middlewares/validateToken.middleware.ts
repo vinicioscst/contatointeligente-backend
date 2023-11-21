@@ -21,6 +21,7 @@ export const validateToken = (
     }
 
     res.locals.userId = decoded.sub
+    res.locals.isAdmin = decoded.isAdmin
 
     return next();
   });
