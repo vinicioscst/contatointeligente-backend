@@ -15,7 +15,6 @@ const contactRequestSchema = contactSchema.omit({
   createdAt: true,
   updatedAt: true,
   deletedAt: true,
-  user: true,
 });
 
 const contactUpdateSchema = contactSchema
@@ -24,7 +23,6 @@ const contactUpdateSchema = contactSchema
     createdAt: true,
     updatedAt: true,
     deletedAt: true,
-    user: true,
   })
   .partial();
 
