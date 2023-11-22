@@ -11,73 +11,6 @@
     }
   ],
   "paths": {
-    "/login": {
-      "post": {
-        "description": "Rota para fazer o login do usuário",
-        "tags": ["Rotas sem autenticação"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/login" },
-              "examples": {
-                "body": {
-                  "value": {
-                    "email": "john@mail.com",
-                    "password": "password123"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "error_response": {
-                    "value": {
-                      "message": "Invalid credentials"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/loginResponse"
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "user": {
-                        "id": "229df55c-e896-4408-a5fa-e5b503cfd241",
-                        "fullName": "John Doe",
-                        "email": "john@mail.com",
-                        "isAdmin": true,
-                        "avatar": "",
-                        "telephone": "(83) 0000-0000",
-                        "createdAt": "2023-11-21",
-                        "updatedAt": "2023-11-22",
-                        "deletedAt": null
-                      },
-                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmNvc19vZmljaWFsQG1haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzAwNjQzODY1LCJleHAiOjE3MDA2NDc0NjUsInN1YiI6IjIyOWRmNTVjLWU4OTYtNDQwOC1hNWZhLWU1YjUwM2NmZDI0MSJ9.ZYrfFteVJ9v7iT9Bg89cNDQ5XZf3FP-nd_v0J2SVZzs"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [{}]
-      }
-    },
     "/users": {
       "post": {
         "description": "Rota para cadastrar usuários no sistema",
@@ -722,6 +655,73 @@
             }
           }
         }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "Rota para fazer o login do usuário",
+        "tags": ["Rotas sem autenticação"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/login" },
+              "examples": {
+                "body": {
+                  "value": {
+                    "email": "john@mail.com",
+                    "password": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "Invalid credentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/loginResponse"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "user": {
+                        "id": "229df55c-e896-4408-a5fa-e5b503cfd241",
+                        "fullName": "John Doe",
+                        "email": "john@mail.com",
+                        "isAdmin": true,
+                        "avatar": "",
+                        "telephone": "(83) 0000-0000",
+                        "createdAt": "2023-11-21",
+                        "updatedAt": "2023-11-22",
+                        "deletedAt": null
+                      },
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmNvc19vZmljaWFsQG1haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzAwNjQzODY1LCJleHAiOjE3MDA2NDc0NjUsInN1YiI6IjIyOWRmNTVjLWU4OTYtNDQwOC1hNWZhLWU1YjUwM2NmZDI0MSJ9.ZYrfFteVJ9v7iT9Bg89cNDQ5XZf3FP-nd_v0J2SVZzs"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{}]
       }
     }
   },
