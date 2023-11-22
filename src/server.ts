@@ -6,7 +6,7 @@ AppDataSource.initialize()
   .then(() => {
     console.log("Database is running");
 
-    const PORT = Number(process.env.PORT) || 3000;
+    const PORT = Number(process.env.PORT) || 3333;
     app.listen(PORT, () => console.log("Server is running"));
   })
   .catch((err) => {
