@@ -14,6 +14,12 @@ app.use("/login", sessionRouter)
 app.use("", contactsRouter)
 
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger-config.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
 app.use(handleErrors)
 
 export default app

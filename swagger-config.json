@@ -1,0 +1,1015 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Contato Inteligente - API",
+    "description": "Essa é a API da aplicação Contato Inteligente, uma aplicação desenvolvida para que você consiga manter todos os seus contatos organizados em um único lugar.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "description": "Rota para fazer o login do usuário",
+        "tags": ["Rotas sem autenticação"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/login" },
+              "examples": {
+                "body": {
+                  "value": {
+                    "email": "john@mail.com",
+                    "password": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "Invalid credentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/loginResponse"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "user": {
+                        "id": "229df55c-e896-4408-a5fa-e5b503cfd241",
+                        "fullName": "John Doe",
+                        "email": "john@mail.com",
+                        "isAdmin": true,
+                        "avatar": "",
+                        "telephone": "(83) 0000-0000",
+                        "createdAt": "2023-11-21",
+                        "updatedAt": "2023-11-22",
+                        "deletedAt": null
+                      },
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmNvc19vZmljaWFsQG1haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzAwNjQzODY1LCJleHAiOjE3MDA2NDc0NjUsInN1YiI6IjIyOWRmNTVjLWU4OTYtNDQwOC1hNWZhLWU1YjUwM2NmZDI0MSJ9.ZYrfFteVJ9v7iT9Bg89cNDQ5XZf3FP-nd_v0J2SVZzs"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{}]
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "Rota para cadastrar usuários no sistema",
+        "tags": ["Rotas sem autenticação"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/userCreation" },
+              "examples": {
+                "body": {
+                  "value": {
+                    "fullName": "Jane Doe",
+                    "email": "jane@mail.com",
+                    "password": "Qk4Aa2n2G62MMj",
+                    "isAdmin": false,
+                    "avatar": "",
+                    "telephone": "(81) 0000-0000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/user"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "8487cd38-c6e6-4f43-a372-0c7c17433ab1",
+                      "fullName": "Jane Doe",
+                      "email": "jane@mail.com",
+                      "isAdmin": false,
+                      "avatar": "",
+                      "telephone": "(81) 0000-0000",
+                      "createdAt": "2023-11-22",
+                      "updatedAt": "2023-11-22",
+                      "deletedAt": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{}]
+      },
+      "get": {
+        "description": "Rota responsável por listar todos os usuários",
+        "tags": ["Rotas Admin - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/userWithContacts"
+                },
+                "examples": {
+                  "response": {
+                    "value": [
+                      {
+                        "id": "8487cd38-c6e6-4f43-a372-0c7c17433ab1",
+                        "fullName": "Jane Doe",
+                        "email": "jane@mail.com",
+                        "isAdmin": false,
+                        "avatar": "",
+                        "telephone": "(81) 0000-0000",
+                        "createdAt": "2023-11-22",
+                        "updatedAt": "2023-11-22",
+                        "deletedAt": null
+                      },
+                      {
+                        "id": "229df55c-e896-4408-a5fa-e5b503cfd241",
+                        "fullName": "John Doe II",
+                        "email": "john_doe2@mail.com",
+                        "isAdmin": true,
+                        "avatar": "",
+                        "telephone": "(83) 0000-0000",
+                        "createdAt": "2023-11-21",
+                        "updatedAt": "2023-11-22",
+                        "deletedAt": null
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "description": "Rota responsável por listar um usuário específico a partir do seu id",
+        "tags": ["Rotas Autenticadas - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/userWithContacts"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "8487cd38-c6e6-4f43-a372-0c7c17433ab1",
+                      "fullName": "Jane Doe",
+                      "email": "jane@mail.com",
+                      "isAdmin": false,
+                      "avatar": "",
+                      "telephone": "(81) 0000-0000",
+                      "createdAt": "2023-11-22",
+                      "updatedAt": "2023-11-22",
+                      "deletedAt": null,
+                      "contacts": [
+                        {
+                          "id": "229df55c-e896-4408-a5fa-e5b595cfd921",
+                          "fullName": "John Doe",
+                          "email": "john@mail.com",
+                          "telephone": "(83) 0000-0000",
+                          "createdAt": "2023-11-21",
+                          "updatedAt": "2023-11-22",
+                          "deletedAt": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Rota responsável por atualizar um usuário específico a partir do seu id",
+        "tags": ["Rotas Autenticadas - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/user" },
+              "examples": {
+                "body": {
+                  "value": {
+                    "fullName": "John Doe II",
+                    "email": "john_doe2@mail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/user"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "229df55c-e896-4408-a5fa-e5b503cfd241",
+                      "fullName": "John Doe II",
+                      "email": "john_doe2@mail.com",
+                      "isAdmin": true,
+                      "avatar": "",
+                      "telephone": "(83) 0000-0000",
+                      "createdAt": "2023-11-21",
+                      "updatedAt": "2023-11-22",
+                      "deletedAt": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Rota responsável por deletar um usuário específico a partir do seu id",
+        "tags": ["Rotas Autenticadas - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/restore": {
+      "patch": {
+        "description": "Rota responsável por restaurar um usuário deletado",
+        "tags": ["Rotas Admin - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User not deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/userWithContacts"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "8487cd38-c6e6-4f43-a372-0c7c17433ab1",
+                      "fullName": "Jane Doe",
+                      "email": "jane@mail.com",
+                      "isAdmin": false,
+                      "avatar": "",
+                      "telephone": "(81) 0000-0000",
+                      "createdAt": "2023-11-22",
+                      "updatedAt": "2023-11-22",
+                      "deletedAt": null,
+                      "contacts": [
+                        {
+                          "id": "229df55c-e896-4408-a5fa-e5b595cfd921",
+                          "fullName": "John Doe",
+                          "email": "john@mail.com",
+                          "telephone": "(83) 0000-0000",
+                          "createdAt": "2023-11-21",
+                          "updatedAt": "2023-11-22",
+                          "deletedAt": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/contacts": {
+      "get": {
+        "description": "Rota responsável por listar todos os contatos de um usuário específico a partir do seu id",
+        "tags": ["Rotas Autenticadas - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/contacts"
+                },
+                "examples": {
+                  "response": {
+                    "value": [
+                      {
+                        "id": "d320ef9b-ab8b-4460-97cf-fdd7eeca09fc",
+                        "fullName": "Melissa Vasconcellos",
+                        "email": "melissa@mail.com",
+                        "telephone": "(81) 0000-0000",
+                        "createdAt": "2023-11-22",
+                        "updatedAt": "2023-11-22",
+                        "deletedAt": null
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Rota responsável por um contato para um usuário específico a partir do seu id",
+        "tags": ["Rotas Autenticadas - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/contactCreation" },
+              "examples": {
+                "body": {
+                  "value": {
+                    "fullName": "Melissa Vasconcellos",
+                    "email": "melissa@mail.com",
+                    "telephone": "(81) 0000-0000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/contactResponse"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "d320ef9b-ab8b-4460-97cf-fdd7eeca09fc",
+                      "fullName": "Melissa Vasconcellos",
+                      "email": "melissa@mail.com",
+                      "telephone": "(81) 0000-0000",
+                      "createdAt": "2023-11-22",
+                      "updatedAt": "2023-11-22",
+                      "deletedAt": null,
+                      "user": {
+                        "id": "229df55c-e896-4408-a5fa-e5b503cfd241",
+                        "fullName": "John Doe II",
+                        "email": "john_doe2@mail.com",
+                        "isAdmin": true,
+                        "avatar": "",
+                        "telephone": "(83) 0000-0000",
+                        "createdAt": "2023-11-21",
+                        "updatedAt": "2023-11-22",
+                        "deletedAt": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/contacts/{contact_id}": {
+      "get": {
+        "description": "Rota responsável por listar um contato específico de um usuário a partir do seu id",
+        "tags": ["Rotas Autenticadas - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          },
+          {
+            "name": "{contact_id}",
+            "description": "UUID do contato",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User/ Contact not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/contact"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "d320ef9b-ab8b-4460-97cf-fdd7eeca09fc",
+                      "fullName": "Melissa Vasconcellos",
+                      "email": "melissa@mail.com",
+                      "telephone": "(81) 0000-0000",
+                      "createdAt": "2023-11-22",
+                      "updatedAt": "2023-11-22",
+                      "deletedAt": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Rota responsável por atualizar um contato específico de um usuário a partir do seu id",
+        "tags": ["Rotas Autenticadas - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          },
+          {
+            "name": "{contact_id}",
+            "description": "UUID do contato",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/contact" },
+              "examples": {
+                "body": {
+                  "value": {
+                    "email": "melissa_oficial@mail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User/ Contact not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/user"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "d320ef9b-ab8b-4460-97cf-fdd7eeca09fc",
+                      "fullName": "Melissa Vasconcellos",
+                      "email": "melissa_oficial@mail.com",
+                      "telephone": "(81) 0000-0000",
+                      "createdAt": "2023-11-22",
+                      "updatedAt": "2023-11-22",
+                      "deletedAt": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Rota responsável por deletar um contato específico de um usuário a partir do seu id",
+        "tags": ["Rotas Autenticadas - Bearer Token"],
+        "parameters": [
+          {
+            "name": "{user_id}",
+            "description": "UUID do usuário",
+            "in": "path"
+          },
+          {
+            "name": "{contact_id}",
+            "description": "UUID do contato",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error_response": {
+                    "value": {
+                      "message": "User/ Contact not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "loginResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "fullName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "isAdmin": {
+                "type": "boolean"
+              },
+              "avatar": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "deletedAt": {
+                "type": "string"
+              }
+            }
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "userCreation": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "deletedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "userWithContacts": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "deletedAt": {
+            "type": "string"
+          },
+          "contacts": {
+            "type": "array",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "fullName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "telephone": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "deletedAt": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "contactCreation": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          }
+        }
+      },
+      "contactResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "deletedAt": null,
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "fullName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "isAdmin": {
+                "type": "boolean"
+              },
+              "avatar": {
+                "type": "string"
+              },
+              "telephone": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "deletedAt": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "contact": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "deletedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "contacts": {
+        "type": "array",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "deletedAt": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
