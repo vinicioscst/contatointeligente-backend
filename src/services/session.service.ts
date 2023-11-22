@@ -1,12 +1,14 @@
 import { compare } from "bcryptjs";
 import { User } from "../entities/User.entity";
 import { AppError } from "../errors/App.error";
-import { TSession, TSessionReturn } from "../interfaces/session.interfaces";
+import { TSession, TSessionResponse } from "../interfaces/session.interfaces";
 import { userRepository } from "../repositories";
 import { sign } from "jsonwebtoken";
+import { userResponseSchema } from "../schemas/users.schemas";
+import { sessionReturnSchema } from "../schemas/session.schema";
 
 export class SessionService {
-  async login(data: TSession): Promise<TSessionReturn> {
+  async login(data: TSession): Promise<TSessionResponse> {
     const { email, password } = data;
 
     const foundUser: User | null = await userRepository.findOneBy({ email });
@@ -28,6 +30,13 @@ export class SessionService {
       { subject: foundUser.id.toString(), expiresIn: process.env.EXPIRES_IN! }
     );
 
-    return { token };
+    const user = userResponseSchema.parse(foundUser)
+
+    const loginInfo = {
+      user,
+      token
+    }
+
+    return sessionReturnSchema.parse(loginInfo);
   }
 }

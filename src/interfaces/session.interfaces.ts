@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { sessionSchema } from "../schemas/session.schema";
+import { sessionReturnSchema, sessionSchema } from "../schemas/session.schema";
 
 type TSession = z.infer<typeof sessionSchema>;
-type TSessionReturn = { token: string };
+type TSessionResponse = z.infer<typeof sessionReturnSchema>;
 
-export { TSession, TSessionReturn };
+export { TSession, TSessionResponse };
