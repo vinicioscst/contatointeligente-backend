@@ -28,6 +28,10 @@ Roda a aplicação localmente no *host* e *port* definido no arquivo `.env`, por
 ## **Endpoints**
 Essa API possui um total de 12 endpoints, focados no CRUD (Create, Read, Update and Delete) de usuários e seus contatos, além do de login.<br/>
 Com a API rodando localmente, acesse no seu navegador o endereço `*http://localhost:3333/api-docs*` para consultar a documentação completa, com todos os endpoints, exemplos de corpos de requisição e possíveis respostas.<br/>
+> [!TIP]  
+> Caso utilize o **Insomnia**, é possível encontrar o arquivo `insomnia-config.json` na raiz do projeto e conseguir importar facilmente todos endpoints para o programa.
+> 
+<br/>
 
 ## **Avisos**
 > - Atente-se para as rotas que necessitam de **token** para acesso. Os mesmos podem ser acessados como resposta no endpoint `/login`;
