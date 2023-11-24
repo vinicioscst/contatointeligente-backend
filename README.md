@@ -35,5 +35,5 @@ Com a API rodando localmente, acesse no seu navegador o endereço `*http://local
 
 ## **Avisos**
 > - Atente-se para as rotas que necessitam de **token** para acesso. Os mesmos podem ser acessados como resposta no endpoint `/login`;
-> - Ao cadastrar usuários, o campo "isAdmin" é **opcional**, tendo seu valor padrão como `false`. Cuidado ao utilizar para não criar usuários admins indesejados;
+> - Ao cadastrar usuários, o campo "isAdmin" e "avatar" são **opcionais**, com o "isAdmin" tendo seu valor padrão como `false`. Cuidado ao utilizar para não criar usuários admins indesejados;
 > - Sobre as rotas autenticadas, o(s) admin(s) podem acessar todas elas, mas usuários comuns podem acessar apenas as que correspondem ao seu id.
