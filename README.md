@@ -9,7 +9,9 @@
 Após clonar esse repositório, é necessário configurar algumas coisas antes de poder utilizar a API.<br/>
 Primeiramente, você irá precisar ter o [**Postgres**](https://www.postgresql.org) instalado no seu computador. Após sua instalação e configuração, crie um banco de dados com o comando:<br/>
 
-`CREATE DATABASE "exemplo_de_nome";`
+```
+CREATE DATABASE "exemplo_de_nome";
+```
 
 Agora, abra o repositório clonado em sua IDE de preferência a partir da pasta raiz do mesmo e crie um arquivo `.env` para preenchar as variáveis de ambiente que fazem parte da aplicação.
 > [!IMPORTANT]  
@@ -17,10 +19,14 @@ Agora, abra o repositório clonado em sua IDE de preferência a partir da pasta 
 
 Com tudo preenchido corretamente, abra o terminal na raiz do projeto e execute os seguintes comandos:
 
-`npm install`<br/>
+```
+npm install
+```
 Instala as dependências do projeto
 
-`npm run dev`<br/>
+```
+npm run dev
+```
 Roda a aplicação localmente no *host* e *port* definido no arquivo `.env`, por padrão funcionando no endereço `*http://localhost:3333*`
 
 <br/>
