@@ -2,9 +2,9 @@
   "name": "m6-entrega01-desafiofullstack-backend-vinicios",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
+    "start": "node server.ts",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "keywords": [],
